@@ -1,6 +1,6 @@
-# Terminal
+# Linux
 
-终端日志
+Linux 日志
 
 ## [tmux](https://github.com/tmux/tmux)
 

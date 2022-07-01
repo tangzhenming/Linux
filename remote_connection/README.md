@@ -89,3 +89,9 @@ ServerAliveCountMax: Sets the number of server alive messages (see below) which 
 Compression: Specifies whether to use compression.  The argument must be yes or no (the default).
 
 TCPKeepAlive: Specifies whether the system should send TCP keepalive messages to the other side.  If they are sent, death of the connection or crash of one of the machines will be properly noticed. However, this means that connections will die if the route is down temporarily, and some people find it annoying. The default is yes (to send TCP keepalive messages), and the client will notice if the net‐ work goes down or the remote host dies.  This is important in scripts, and many users want it too. To disable TCP keepalive messages, the value should be set to no.
+
+### 6. [重装 ecs/cvm 后公钥变更，导致 SSH 远程登录服务器报错：WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!](https://blog.csdn.net/ltstud/article/details/83011125)
+
+1.` ~/.ssh/known_hosts` 是记录远程主机的公钥的文件
+2. 手动清除文件中对应远程主机的公钥
+3. 或者使用命令：`ssh-keygen -R [远程主机的 IP 地址]` 进行清除（推荐）

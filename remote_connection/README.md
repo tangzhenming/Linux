@@ -102,9 +102,14 @@ TCPKeepAlive: Specifies whether the system should send TCP keepalive messages to
 
 - -N: 端口转发
 - -L: 端口映射，支持远程的端口在本地进行访问
-  - `ssh -L [bind_address:]port:host:hostport`
+  - `local$ ssh -L [bind_address:]port:host:hostport`
   - 左侧为本地 IP 和端口
-  - 将服务器中的 8080 端口映射到本地 5000 端口：`ssh -NL 5000:localhost:8080 tang`
+  - 将服务器中的 8080 端口映射到本地 8081 端口：`local$ ssh -NL 8081:localhost:8080 tang`
 - -R: 端口映射，支持本地的端口在远程进行访问
-  - `ssh -R [bind_address:]port:host:hostport`
+  - `local$ ssh -R [bind_address:]port:host:hostport`
   - 左侧为远程 IP 和端口
+  - 将本地的 7890 端口映射到远程的服务器的 8081 端口：`local$ ssh -NR localhost:8081:localhost:7890 tang`
+    - `Warning: remote port forwarding failed for listen port 8081`: 原因是这个端口被占用了, 或者是之前的连接还没断开, 这个时候就去远程服务器上 kill 掉这个程序就可以了, 注意一定要是 root 账号
+    - `netstat -anp | grep 8081` && `kill _id`
+  - `tang$ export https_proxy=http://127.0.0.1:8081 http_proxy=http://127.0.0.1:8081 all_proxy=socks5://127.0.0.1:8081`
+  - `curl https://www.google.com.hk/`

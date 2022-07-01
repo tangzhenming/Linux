@@ -7,6 +7,7 @@ Linux 日志
 - [远程连接](https://github.com/tangzhenming/Linux/tree/main/remote_connection)
 - [apps](https://github.com/tangzhenming/Linux/tree/main/apps)
 - [cvm_ecs](https://github.com/tangzhenming/Linux/tree/main/cvm_ecs)
+- [文件操作](https://github.com/tangzhenming/Linux/tree/main/file_operation)
 - ...
 
 ## Reference

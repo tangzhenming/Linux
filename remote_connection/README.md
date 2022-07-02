@@ -64,9 +64,11 @@ Host otheruser
 ```shell
 # 编辑服务器端的 /etc/ssh/sshd_config
 # 禁用密码登录
+# 找到以下两行进行修改
+# 重启 sshd 服务：service sshd restart 或者 systemctl restart sshd.service
 
-Host *
-  PasswordAuthentication no
+PubkeyAuthentication yes
+PasswordAuthentication no
 ```
 
 #### 1.5 保持连接

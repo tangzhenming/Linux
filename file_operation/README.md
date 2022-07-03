@@ -21,7 +21,7 @@
 
 以 / 结尾，代表将该目录下所有内容进行拷贝。
 
-## 2. cd/pwd/ls/exa/tree
+## 2. cd/autojump/pwd/ls/exa/tree
 
 ### 2.1 cd
 
@@ -33,13 +33,24 @@ change directory 切换目录
 - ~ : 当前用户目录，也叫做 home 目录，可用 $HOME 表示
 - \- : 上一次工作目录
 
+### 2.2 autojump
+
 可使用 autojump 工具跳转任意目录；原理：将每次打开的目录维护到自身的数据库中，同名则根据跳转的次数设置权重。
 
-### 2.2 pwd
+- -h : 查看帮助
+- -a DIRECTORY, --add DIRECTORY add path
+- -i [WEIGHT], --increase [WEIGHT] increase current directory weight
+- -d [WEIGHT], --decrease [WEIGHT] decrease current directory weight
+- --complete used for tab completion
+- --purge remove non-existent paths from database
+- -s, --stat show database entries and their key weights
+- -v, --version show version information
+
+### 2.3 pwd
 
 print working directory 打印当前工作目录
 
-### 2.3 ls
+### 2.4 ls
 
 列出当前工作目录的内容
 
@@ -47,7 +58,7 @@ print working directory 打印当前工作目录
 - -l: --long，列出详细信息，包括文件大小、权限、创建时间、修改时间等
 - -h: --human-readable，可读化格式进行输出，比如 -l 时文件大小不带单位，-h 就会补充人类可读的单位进行显示
 
-### 2.4 exa
+### 2.5 exa
 
 ls 的一个更强大的版本，支持更多的选项。
 
@@ -56,7 +67,7 @@ ls 的一个更强大的版本，支持更多的选项。
 - -T: --tree，以树状图的形式列出文件
 - -L: --level，指定层级
 
-### 2.5 tree
+### 2.6 tree
 
 ```shell
 # macos
@@ -71,3 +82,7 @@ $ yum install tree
 - -L: 指定层级
 - -F: 对目录末尾添加 /，对可执行文件末尾添加 \*
 - -a: --all，显示所有文件，包括隐藏文件
+
+## 3. stat
+
+查看文件系统信息。

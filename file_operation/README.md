@@ -95,6 +95,15 @@ $ yum install tree
 
 查看文件系统信息。
 
+- regular file: 普通文件
+- Size: 文件大小
+- Links: 文件硬链接个数
+- Access Mode: 文件访问模式
+- Access: atime, 文件访问时间
+- Modify: mtime, 文件修改时间
+- Change: ctime, 文件修改时间(包括属性，比如 mode 和 owner，也包括 mtime)
+- Birth: 某些操作系统其值为 -
+
 ### 3.2 link
 
 - `ln file file-hard`: 在两个文件间创建链接，默认为硬链接。
@@ -106,5 +115,3 @@ $ yum install tree
   - 源文件中的 regular file 标记变成了 symbolic link 标记
 
 pnpm 中广泛使用了硬链接和软链接。
-
-### 3.3

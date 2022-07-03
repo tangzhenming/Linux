@@ -16,4 +16,4 @@ Linux 日志
 
 [Linux rsync 命令用法详解](http://c.biancheng.net/view/6121.html)
 
-[tmux 基本操作](https://blog.csdn.net/sui_152/article/details/121650341)
+[Linux 教程](https://www.runoob.com/linux/linux-tutorial.html)

@@ -114,4 +114,4 @@ $ yum install tree
   - Inode 不同，这说明两者是独立的文件
   - 源文件中的 regular file 标记变成了 symbolic link 标记
 
-pnpm 中广泛使用了硬链接和软链接。
+pnpm 中广泛使用了硬链接和软链接: [浅谈 pnpm 软链接和硬链接](https://blog.csdn.net/weixin_43990363/article/details/121757838)。

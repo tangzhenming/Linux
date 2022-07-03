@@ -54,9 +54,15 @@ print working directory 打印当前工作目录
 
 列出当前工作目录的内容
 
+#### 2.4.1 指令
+
 - -a: --all，列出所有文件，包括隐藏文件
 - -l: --long，列出详细信息，包括文件大小、权限、创建时间、修改时间等
 - -h: --human-readable，可读化格式进行输出，比如 -l 时文件大小不带单位，-h 就会补充人类可读的单位进行显示
+
+#### 2.4.2 列出指定文件类型的文件
+
+`ls -lah *html *png`
 
 ### 2.5 exa
 
@@ -83,6 +89,22 @@ $ yum install tree
 - -F: 对目录末尾添加 /，对可执行文件末尾添加 \*
 - -a: --all，显示所有文件，包括隐藏文件
 
-## 3. stat
+## 3. stat/link
+
+### 3.1 stat
 
 查看文件系统信息。
+
+### 3.2 link
+
+- `ln file file-hard`: 在两个文件间创建链接，默认为硬链接。
+  - file 是源文件，file-hard 是硬链接文件
+  - 两者通过 stat 命令查看信息，可以发现：硬链接个数 Links 都变为 2 ，所有属性都相同。
+- `ln -s file file-soft`: 在两个文件间创建软链接
+  - stat file-soft 发现，cat 内容相同
+  - Inode 不同，这说明两者是独立的文件
+  - 源文件中的 regular file 标记变成了 symbolic link 标记
+
+pnpm 中广泛使用了硬链接和软链接。
+
+### 3.3

@@ -35,7 +35,11 @@ change directory 切换目录
 
 ### 2.2 autojump
 
-可使用 autojump 工具跳转任意目录；原理：将每次打开的目录维护到自身的数据库中，同名则根据跳转的次数设置权重。
+可使用 autojump 工具跳转任意目录。
+
+原理：将每次打开的目录维护到自身的数据库中，同名则根据跳转的次数设置权重。
+
+指令：
 
 - -h : 查看帮助
 - -a DIRECTORY, --add DIRECTORY add path
@@ -45,6 +49,12 @@ change directory 切换目录
 - --purge remove non-existent paths from database
 - -s, --stat show database entries and their key weights
 - -v, --version show version information
+
+安装：
+
+MacOS: `brew install autojump`
+
+Add the following line to your ~/.bash_profile or ~/.zshrc file: `[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh`, then `source ~/.zshrc`
 
 ### 2.3 pwd
 
@@ -115,3 +125,7 @@ $ yum install tree
   - 源文件中的 regular file 标记变成了 symbolic link 标记
 
 pnpm 中广泛使用了硬链接和软链接: [浅谈 pnpm 软链接和硬链接](https://blog.csdn.net/weixin_43990363/article/details/121757838)。
+
+### 3.3 修改文件的 mode 和 mtime ，git 中是否会有更改操作？
+
+1. 使用 chmod 修改文件的 mode ，

@@ -149,7 +149,7 @@ pnpm 中广泛使用了硬链接和软链接: [浅谈 pnpm 软链接和硬链接
       3. -d : 后面可以接日期，也可以使用 –date=”日期或时间”
       4. -m : 仅修改 modify time。
       5. -t : 后面可以接时间，格式为 [YYMMDDhhmm]
-   3. 仅修改 mtime: `touch -c -m -t 202207030000.01 README.md`
+   3. 仅修改 mtime: `touch -c -m -t 202207030001 README.md`
    4. git 中不会有更改操作
 
 ## 4. user

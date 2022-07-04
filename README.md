@@ -12,6 +12,8 @@ Linux 日志
 
 ## Reference
 
+[Linux 命令搜索](https://wangchujiang.com/linux-command/)
+
 [Linux 技能实战](https://q.shanyue.tech/command/)
 
 [Linux rsync 命令用法详解](http://c.biancheng.net/view/6121.html)

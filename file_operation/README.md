@@ -103,12 +103,6 @@ $ yum install tree
 - -F: 对目录末尾添加 /，对可执行文件末尾添加 \*
 - -a: --all，显示所有文件，包括隐藏文件
 
-### 2.7 如何列出某个目录下的所有 js 文件与 html 文件
-
-`ls -alh *js *html`
-
-连同子目录的也一起列出来：`find . -name "*.js" -o -name "*.html" | xargs ls -alh` 或者 `find . -regextype posix-extended -regex ".*\.(js|html)" | xargs ls -alh`
-
 ## 3. stat/link
 
 ### 3.1 stat
@@ -135,22 +129,6 @@ $ yum install tree
   - 源文件中的 regular file 标记变成了 symbolic link 标记
 
 pnpm 中广泛使用了硬链接和软链接: [浅谈 pnpm 软链接和硬链接](https://blog.csdn.net/weixin_43990363/article/details/121757838)。
-
-### 3.3 修改文件的 mode 和 mtime ，git 中是否会有更改操作？
-
-1. 使用 chmod 修改文件的 mode ，使用 ls -l 或 stat 查看文件或文件夹的权限
-   1. `sudo chmod 777 README.md`
-   2. git 中会有更改操作
-2. 使用 touch 修改文件的 mtime ，使用 stat 查看文件的 mtime
-   1. `touch README.md`: 默认就是修改一个文件的 atime 和 mtime 为当前系统的时间
-   2. 指令
-      1. -a : 仅修改 access time。
-      2. -c : 如果文件不存在，则不创建新文件。
-      3. -d : 后面可以接日期，也可以使用 –date=”日期或时间”
-      4. -m : 仅修改 modify time。
-      5. -t : 后面可以接时间，格式为 [YYMMDDhhmm]
-   3. 仅修改 mtime: `touch -c -m -t 202207030001 README.md`
-   4. git 中不会有更改操作
 
 ## 4. user
 

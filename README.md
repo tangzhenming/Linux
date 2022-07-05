@@ -2,13 +2,19 @@
 
 Linux 日志
 
-## Catalog
+## Catalog 📚
 
 - [远程连接](https://github.com/tangzhenming/Linux/tree/main/remote_connection)
 - [apps](https://github.com/tangzhenming/Linux/tree/main/apps)
 - [cvm_ecs](https://github.com/tangzhenming/Linux/tree/main/cvm_ecs)
 - [文件操作](https://github.com/tangzhenming/Linux/tree/main/file_operation)
 - ...
+
+## 思考 🤔
+
+1. [SSH 连接 Linux 服务器时的语言设置问题](https://github.com/tangzhenming/Linux/issues/1)
+2. [如何列出某个目录下的所有 js 文件与 html 文件](https://github.com/tangzhenming/Linux/issues/2)
+3. [修改文件的 mode 和 mtime ，git 中是否会有更改操作？](https://github.com/tangzhenming/Linux/issues/3)
 
 ## Reference
 

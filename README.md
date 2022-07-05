@@ -26,6 +26,6 @@ Linux 日志
 
 [Linux 教程](https://www.runoob.com/linux/linux-tutorial.html)
 
-## 未分类知识点
+## 未分类/未完成 知识点
 
 ### [linux 中，&和&&,|和||](https://blog.csdn.net/ccoran/article/details/84727034)

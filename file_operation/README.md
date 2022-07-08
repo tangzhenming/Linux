@@ -10,6 +10,7 @@
 - -z: --compress，压缩传输
 - -v: --verbose，详细输出
 - -r: --recursive，递归拷贝
+- --exclude: 排除拷贝
 
 ### 1.1 拷贝至远程
 

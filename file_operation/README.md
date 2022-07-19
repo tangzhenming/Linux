@@ -1,26 +1,30 @@
-# 文件操作
+# 目录文件操作
 
 ## 1. rsync
 
-指令：
+一个文件拷贝工具，支持断点续传、按需拷贝、远程服务器拷贝。
+
+options:
 
 - -l: --links，拷贝符号链接
 - -a: --archive，归档模式
+  - 可以拷贝元属性，如 ctime/mtime/mode
 - -h: --human-readable，可读化格式进行输出
 - -z: --compress，压缩传输
 - -v: --verbose，详细输出
 - -r: --recursive，递归拷贝
-- --exclude: 排除拷贝
+- --exclude: 拷贝忽略项
 
 ### 1.1 拷贝至远程
 
-`rsync [options] source(local) destination(remote)`
+`rsync [options] source(local) host:/destination(remote)`
 
 ### 1.2 拷贝目录
 
-不以 / 结尾，代表将该目录连同目录名一起进行拷贝。
+源目录结尾：
 
-以 / 结尾，代表将该目录下所有内容进行拷贝。
+- 不以 / 结尾，代表将该目录连同目录名一起进行拷贝
+- 以 / 结尾，代表将该目录下所有内容进行拷贝
 
 ## 2. cd/autojump/pwd/ls/exa/tree
 
@@ -32,30 +36,39 @@ change directory 切换目录
 - .. : 上级目录
 - / : 根目录
 - ~ : 当前用户目录，也叫做 home 目录，可用 $HOME 表示
-- \- : 上一次工作目录
+- \- : 上一次工作目录（扩展：git checkout - : 切换到上一次的分支）
 
-### 2.2 autojump
+### 2.2 [autojump](https://github.com/wting/autojump)
 
 可使用 autojump 工具跳转任意目录。
 
 原理：将每次打开的目录维护到自身的数据库中，同名则根据跳转的次数设置权重。
 
-指令：
+#### 2.2.1 安装
+
+- MacOS: `brew install autojump`
+  - Add the following line to your ~/.bash_profile or ~/.zshrc file: `[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh`, then `source ~/.zshrc`
+- Manual: download then run `./install.py or ./uninstall.py`
+
+#### 2.2.2 指令
 
 - -h : 查看帮助
 - -a DIRECTORY, --add DIRECTORY add path
 - -i [WEIGHT], --increase [WEIGHT] increase current directory weight
+  - e.g. `j -i 10`
 - -d [WEIGHT], --decrease [WEIGHT] decrease current directory weight
 - --complete used for tab completion
 - --purge remove non-existent paths from database
 - -s, --stat show database entries and their key weights
 - -v, --version show version information
 
-安装：
+#### 2.2.3 用例
 
-MacOS: `brew install autojump`
-
-Add the following line to your ~/.bash_profile or ~/.zshrc file: `[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh`, then `source ~/.zshrc`
+1. 跳转到一个包含 foo 的目录：`j foo`
+2. 跳转到当前目录下的包含 bar 的子目录：`jc bar`
+3. 在资源管理器（文件管理窗口等）打开目录 foo : `jo foo` （仅支持存在资源管理器的系统）
+4. 合并 2 和 3 : `jco bar`
+5. 假设数据库中存在两个目录：30 /home/user/mail/inbox 和 10 /home/user/work/inbox ，使用 `j in` 会跳转到 /home/user/mail/inbox ，使用 `j w in` 会跳转到优先级较低的 /home/user/work/inbox
 
 ### 2.3 pwd
 
@@ -65,7 +78,9 @@ print working directory 打印当前工作目录
 
 列出当前工作目录的内容
 
-指令：
+#### 2.4.1 指令
+
+常用指令：`ls -lah`
 
 - -a: --all，列出所有文件，包括隐藏文件
 - -l: --long，列出详细信息，包括文件大小、权限、创建时间、修改时间等
@@ -79,14 +94,35 @@ print working directory 打印当前工作目录
   - 第 7 列 这告诉我们文件名或者目录名。
 - -h: --human-readable，可读化格式进行输出，比如 -l 时文件大小不带单位，-h 就会补充人类可读的单位进行显示
 
-### 2.5 exa
+#### 2.4.2 配置颜色区分目录和文件
 
-ls 的一个更强大的版本，支持更多的选项。
+实际生效指令：`ls --color=auto`
 
-指令：
+可以在环境变量文件中配置别名（alias）：
+
+1. `vim ~/.bashrc`
+2. `alias ls='ls --color=auto'`
+3. `source ~/.bashrc`
+
+### 2.5 [exa](https://github.com/ogham/exa)
+
+ls 的一个更强大的版本（替代品），支持更多的选项，更友好的输出展示。
+
+#### 2.5.1 指令
 
 - -T: --tree，以树状图的形式列出文件
 - -L: --level，指定层级
+- 1, --oneline: display one entry per line
+- G, --grid: display entries as a grid (default)
+- l, --long: display extended details and attributes
+- R, --recurse: recurse into directories
+- T, --tree: recurse into directories as a tree
+- x, --across: sort the grid across, rather than downwards
+- F, --classify: display type indicator by file names
+- --colo[u]r: when to use terminal colours
+- --colo[u]r-scale: highlight levels of file sizes distinctly
+- --icons: display icons
+- --no-icons: don't display icons (always overrides --icons)
 
 ### 2.6 tree
 

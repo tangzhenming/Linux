@@ -6,7 +6,7 @@ Linux 日志
 
 - [1. 远程连接](https://github.com/tangzhenming/Linux/tree/main/remote_connection)
 - [2. Linux apps](https://github.com/tangzhenming/Linux/tree/main/apps)
-- [文件操作](https://github.com/tangzhenming/Linux/tree/main/file_operation)
+- [3. 目录文件操作](https://github.com/tangzhenming/Linux/tree/main/file_operation)
 - ...
 
 ## 思考 🤔
@@ -15,6 +15,8 @@ Linux 日志
 2. [如何列出某个目录下的所有 js 文件与 html 文件](https://github.com/tangzhenming/Linux/issues/2)
 3. [修改文件的 mode 和 mtime ，git 中是否会有更改操作？](https://github.com/tangzhenming/Linux/issues/3)
 4. [在服务器中安装了 mysql 数据库，我们如何更安全地链接数据库？](https://github.com/tangzhenming/Linux/issues/4)
+5. [在 Node.js 或其它语言中如何实现 cp](https://github.com/tangzhenming/Linux/issues/5)
+6. [为何说保留复制文件时的元属性，对静态资源服务器有益]()
 
 ## Reference
 
@@ -28,4 +30,19 @@ Linux 日志
 
 ## 未分类/未完成 知识点
 
-### [linux 中，&和&&,|和||](https://blog.csdn.net/ccoran/article/details/84727034)
+[linux 中，&和&&,|和||](https://blog.csdn.net/ccoran/article/details/84727034)
+
+关于 gnu linux debian
+
+https://www.gnu.org/gnu/linux-and-gnu.html
+
+https://www.gnu.org/
+
+https://www.debian.org/releases/buster/amd64/ch01s03.en.html
+
+https://blog.venatir.com/static/e827c73a4a5fb74e3df1c186712dcfd9/cc6fe/linux-timeline.png
+![image](https://user-images.githubusercontent.com/28591906/179732116-fd77cbb0-71eb-4dd3-90e0-baa4fceeb21e.png)
+
+uname -s 内核名称 uname -o 操作系统
+
+cat /etc/redhat-release 文件存在为 centos ，因为 centos 是从 red hat 衍生的

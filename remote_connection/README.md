@@ -100,7 +100,7 @@ TCPKeepAlive: Specifies whether the system should send TCP keepalive messages to
 
 ### 2. SSH 隧道
 
-通过 SSH 将远程主机端口号映射到宿主机本地。
+通过 SSH 建立连接，并将远程主机端口号映射到宿主机本地、将宿主机本地端口号映射到远程主机。
 
 - -N: 端口转发
 - -L: 端口映射，支持远程的端口在本地进行访问

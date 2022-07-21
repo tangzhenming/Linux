@@ -108,21 +108,54 @@ print working directory 打印当前工作目录
 
 ls 的一个更强大的版本（替代品），支持更多的选项，更友好的输出展示。
 
-#### 2.5.1 指令
+#### 2.5.1 [manual install](https://the.exa.website/install/linux#manual)
 
-- -T: --tree，以树状图的形式列出文件
+1. download && rsync to /usr/local/ (or just curl -O [exa link])
+2. put it in /usr/local/, or any of the directories listed in the $PATH environment variable
+3. soft link
+   1. ln -s /usr/local/exa-linux-x86_64-v0.10.0/bin/exa /usr/local/bin/
+   2. 如果需要重新建立，直接加 -f ，即 -sf
+4. modify the $PATH variable, /etc/profile, add the directory where exa's bin directory is located
+
+   ```bash
+   export EXA_HOME=/usr/local/exa-linux-x86_64-v0.10.0
+
+   export PATH=$EXA_HOME/bin:$PATH
+   ```
+
+5. source /etc/profile
+6. 直接执行文件夹中的 exa 会报错缺少依赖，下面进行安装
+7. glibc
+   ```bash
+   curl -O http://ftp.gnu.org/gnu/glibc/glibc-2.18.tar.gz
+   tar -zxvf glibc-2.18.tar.gz
+   cd glibc-2.18
+   mkdir build
+   cd build
+   ../configure --prefix=/usr
+   ```
+8. yum install -y gcc
+9. make -j4
+10. make install
+
+#### 2.5.2 command and options
+
 - -L: --level，指定层级
-- 1, --oneline: display one entry per line
-- G, --grid: display entries as a grid (default)
-- l, --long: display extended details and attributes
-- R, --recurse: recurse into directories
-- T, --tree: recurse into directories as a tree
-- x, --across: sort the grid across, rather than downwards
-- F, --classify: display type indicator by file names
+- -1, --oneline: display one entry per line
+- -G, --grid: display entries as a grid (default)
+- -l, --long: display extended details and attributes
+- -R, --recurse: recurse into directories
+- -T, --tree: recurse into directories as a tree 以树状图的形式列出文件
+- -x, --across: sort the grid across, rather than downwards
+- -F, --classify: display type indicator by file names
 - --colo[u]r: when to use terminal colours
 - --colo[u]r-scale: highlight levels of file sizes distinctly
 - --icons: display icons
 - --no-icons: don't display icons (always overrides --icons)
+- -- git 输出文件的 Git 状态
+  - N：新文件
+  - M：文件有变动
+  - I：该文件被忽略
 
 ### 2.6 tree
 

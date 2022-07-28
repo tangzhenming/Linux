@@ -25,6 +25,7 @@ Linux 日志
 12. [在服务器中安装了 mysql 数据库，我们如何更安全地链接数据库？](https://github.com/tangzhenming/Linux/issues/4)
 13. [在 Node.js 或其它语言中如何实现 cp](https://github.com/tangzhenming/Linux/issues/5)
 14. [为何说保留复制文件时的元属性，对静态资源服务器有益]()
+15. [在使用 rsync 传输前端项目时，如何忽略 node_modules 目录]()
 
 ## Reference
 

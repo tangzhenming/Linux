@@ -87,8 +87,8 @@ print working directory 打印当前工作目录
   - 第 1 列
   - 第一个字母 d 意味着内容是目录或者文件。在上面的截图中，Desktop、 Documents、 Downloads 和 lynis-1.3.8 是目录。如果是'-'(减号)，这意味着它的内容是文件。当它是 l(小写 l 字符)，意味这内容是链接文件。下面的 9 个字符是关于文件权限。前 3 个 rwx 字符是文件的拥有者的权限，第二组 3rwx 是文件的所有组的权限，最后的 rwx 是对其他人访问文件的权限。
   - 第 2 列 这行告诉我们有多少链接指向这个文件。
-  - 第 3 列 这行告诉我们谁是这个文件/文件夹的所有者。
-  - 第 4 列 这行告诉我们谁是这个文件/文件夹的所有组。
+  - 第 3 列 这行告诉我们谁是这个文件/文件夹的所有者（所属用户）。
+  - 第 4 列 这行告诉我们谁是这个文件/文件夹的所有组（所属用户组）。
   - 第 5 列 这行告诉我们这个文件/文件夹的以字节为单位的大小。 目录的大小总是 4096 字节。
   - 第 6 列 这告诉我们文件最后的修改时间。
   - 第 7 列 这告诉我们文件名或者目录名。
@@ -179,23 +179,64 @@ $ yum install tree
 
 查看文件系统信息。
 
+文件元属性：
+
 - regular file: 普通文件
 - Size: 文件大小
 - Links: 文件硬链接个数
 - Access Mode: 文件访问模式
 - Access: atime, 文件访问时间
-- Modify: mtime, 文件修改时间
+- Modify: mtime, 文件修改时间（在 HTTP 服务器中，常以此作为 last-modified 响应头）
 - Change: ctime, 文件修改时间(包括属性，比如 mode 和 owner，也包括 mtime)
 - Birth: 某些操作系统其值为 -
+
+ctime 描述文件状态更新更准确，mtime 是只文件内容有变化就会更新
+
+指令：
+
+- -c: 指定文件某个属性进行输出
+  - %a access rights in octal
+  - %A access rights in human readable form
+  - %f raw mode in hex
+  - %F file type
+  - %g group ID of owner
+  - %G group name of owner
+  - %h number of hard links
+  - %i inode number
+  - %n file name
+  - %s total size, in bytes
+  - e.g. `stat -c '%F' whoami.yaml`
+
+判断文件是一个软链接：stat -c "%F" test-soft 输出 symbolic link
+
+查询硬链接个数：stat -c "%h" test1
+
+Linux 中一切皆文件，展示其中一些（~/traefik/）：
+
+- regular file: `stat -c '%F' whoami.yaml`
+- directory: `stat -c '%F' blog`
+- symbolic link
+- socket
+- character special file
+- block special file
+
+使用 ls -lah 第一个字符也表示文件类型：
+
+- -，regular file。普通文件。
+- d，directory。目录文件。
+- l，symbolic link。符号链接。
+- s，socket。套接字文件，一般以 .sock 作为后缀。（可把 .sock 理解为 API，我们可以像 HTTP 一样对它请求数据）
+- b，block special file。块设备文件。
+- c，character special file。字符设备文件。
 
 ### 3.2 link
 
 - `ln file file-hard`: 在两个文件间创建链接，默认为硬链接。
   - file 是源文件，file-hard 是硬链接文件
-  - 两者通过 stat 命令查看信息，可以发现：硬链接个数 Links 都变为 2 ，所有属性都相同。
+  - 两者通过 stat 命令查看信息，可以发现：硬链接个数 Links 都变为 2 ，所有属性都相同，特别注意： Inode 相同。
 - `ln -s file file-soft`: 在两个文件间创建软链接
   - stat file-soft 发现，cat 内容相同
-  - Inode 不同，这说明两者是独立的文件
+  - 特别注意：Inode 不同，这说明两者是独立的文件
   - 源文件中的 regular file 标记变成了 symbolic link 标记
 
 pnpm 中广泛使用了硬链接和软链接: [浅谈 pnpm 软链接和硬链接](https://blog.csdn.net/weixin_43990363/article/details/121757838)。
@@ -211,8 +252,98 @@ pnpm 中广泛使用了硬链接和软链接: [浅谈 pnpm 软链接和硬链接
    2. -u: 显示 IDLE 和 PID
    3. 结果中的 LINE pts/0 表示 在 pts/0 的 tty 登录
    4. IDLE 表示当前用户已经处于不活跃状态多长时间，. 代表当前仍在活跃状态
-4. w: 同上
+4. w: 同上，更强大，可代替 who
 5. last: 打印该服务器的历史登录用户
    1. -h: 不存在的命令，可查看支持的命令
    2. -n \_number: 列出最近 number 个
    3. -t：查看指定时间之前的用户登录历史
+
+## 5. chmod/chown
+
+chmod：改变文件的读写权限
+
+%a：获得数字的 mode: stat -c %a README.md
+
+644
+
+%A：获得可读化的 mode: stat -c %A README.md
+
+-rw-r--r--
+
+- user 文件当前用户
+- group 文件当前用户所属组
+- other 其它用户
+
+rw-：当前用户可写可读，110，即十进制 6
+r--：当前用户组（当前用户所在用户组）可读，100，即十进制 4
+r--：其它用户可读，100，即十进制 4
+
+加起来就是 644: -rw-r--r--
+
+777，即所有用户都有 rwx 权限，即可读可写可执行
+
+以可读化的形式添加权限：
+
+```sh
+# u: user
+# g: group
+# o: other
+# a: all
+# +-=: 增加减少复制
+# perms: 权限
+$ chmod [ugoa...][[+-=][perms...]...]
+
+# 为 yarn.lock 文件的用户所有者添加可读权限
+$ chmod u+r yarn.lock
+
+# 为所有用户添加 yarn.lock 的可读权限
+$ chmod a+r yarn.lock
+
+# 为所有用户删除 yarn.lock 的可读权限
+$ chmod a-r yarn.lock
+
+```
+
+chown -R shanyue:shanyue . ：将 . 目录下的所属用户:所属用户组更改为 shanyue ，遍历子文件进行
+
+## 6. cat/less/head/tail
+
+cat，concatenate 缩写，concatenate and print files 连接文件并打印至标准输出（stdout）。
+
+cat 多个文件：cat test1 test2
+
+原理：
+
+我们在打开一个文件，读取内容时，在操作系统底层实际上做了两步操作。
+
+- open：open("package.json")，并返回文件描述符，即 file descriptor，简写 fd，一个非负整数，通过文件描述符可用来读写文件。
+- read：read(3)，通过 fd 读取文件内容，其中的 3 为文件描述符。
+- 在 Node.js 中，你会发现它有一个 API 为 fs.readFile，它实际上是 fs.open 与 fs.read 的结合体。
+
+使用 less 也可以查看文件内容：less -N 显示行号 less -N whoami.yaml
+
+使用 head 也可以查看文件内容，并且还能筛选行数和字节数
+
+读取文件或者标准输入的前 N 行或者前 N 个字节：
+
+前 3 行：head -3 whoami.yaml
+
+前 3 个字节：head -c 3 whoami.yaml
+
+tail，同 head ，读取文件或者标准输入的最后 N 行或最后 N 个字节
+
+与 head 最大不同的一点是：--follow，简写为 -f。它可以实时打印文件中最新内容。
+
+在调试日志时非常有用：日志一行一行追加到文件中，而 tail -f 可以实时打印追加的内容。
+
+## 7. pipe
+
+| 构成了管道，它将前边命令的标准输出（stdout）作为下一个命令的标准输入（stdin）。
+
+读取 package.json 内容，读取前十行，再读取最后三行：`cat package.json | head -10 | tail -3`
+
+在上边提到标准输入（stdin）与标准输出（stdout），其实，stdin/stdout 就是特殊的文件描述符。
+
+- stdin，fd = 0（fd file descriptor），直接从键盘中读取数据
+- stdout，fd = 1，直接将数据打印至终端
+- stderr，fd = 2，标准错误，直接将异常信息打印至终端

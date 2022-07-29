@@ -26,6 +26,12 @@ Linux 日志
 13. [在 Node.js 或其它语言中如何实现 cp](https://github.com/tangzhenming/Linux/issues/5)
 14. [为何说保留复制文件时的元属性，对静态资源服务器有益]()
 15. [在使用 rsync 传输前端项目时，如何忽略 node_modules 目录]()
+16. [使用 tree/exa 列出目录树时，如何忽略 .gitignore 中文件内容]()
+17. [在 Node.js 或其它语言中如何获得 pwd]()
+18. [在 Node.js 或其它语言中如何获得 ls 子文件列表。参考 fsp.readdir 及 readdir]()
+19. [如何查出当前服务器上有多少个登录用户]()
+20. [如何查出某天服务器上有多少个登录用户](https://umiinn9jie.feishu.cn/wiki/wikcn80sCv4n1VbfhABjgT6jfjg)
+21. [在 pnpm 中，为什么不全部使用软链接]()
 
 ## Reference
 

@@ -663,3 +663,45 @@ $ printenv NODE_ENV
 # 实际工作中的使用示例
 $ NODE_ENV=production npm run build
 ```
+
+## 13. $PATH/which/command
+
+### $PATH
+
+假设我们需要执行一个命令，我需要进入到该命令的目录，然后执行，如 ./script.sh。
+在 linux 操作系统中，有许多全局可执行的命令行工具，那我们是如何定位到这些命令的？
+我们就是 通过 $PATH 环境变量作为我们的全局命令执行目录。
+
+命令行工具思路：
+
+1. 将自己的命令所在的目录纳入 $PATH 中
+2. 将自己的命令复制到 $PATH 的某个路径中 (一般为软链接)
+
+### which
+
+列出全局命令的完整路径。
+
+```bash
+# 当我们执行 ps 时，实际上执行的是 /usr/bin/ps
+$ which ps
+/usr/bin/ps
+
+# 当我们执行 node 时，实际上执行的是 /usr/local/bin/node
+$ which node
+/usr/local/bin/node
+```
+
+### command
+
+command，用以执行命令，及列出全局命令路径。
+
+```bash
+# 直接执行 node
+$ command node
+
+# 打印出 node 的真实执行路径
+$ command -v node
+/usr/local/bin/node
+```
+
+和 which 的不同：当某个命令不存在时，command -v 不会输出任何字符，用此常来判断某个命令是否存在。

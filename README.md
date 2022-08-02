@@ -32,6 +32,8 @@ Linux 日志
 19. [如何查出当前服务器上有多少个登录用户]()
 20. [如何查出某天服务器上有多少个登录用户](https://umiinn9jie.feishu.cn/wiki/wikcn80sCv4n1VbfhABjgT6jfjg)
 21. [在 pnpm 中，为什么不全部使用软链接]()
+22. [你知道 npm install -g 全局安装的命令行为什么可以直接使用呢？]()
+23. [如何设计一个可以切换 node 版本的命令行工具，比如 n 与 nvm](https://umiinn9jie.feishu.cn/wiki/wikcnNeiM2IGoASWVSwfhMtVtsf)
 
 ## Reference
 
@@ -88,3 +90,13 @@ cat /etc/redhat-release 文件存在为 centos ，因为 centos 是从 red hat �
 [关于 Linux 服务器里 /usr/bin 目录和 /usr/local/bin 目录](https://blog.csdn.net/LittlePoem/article/details/109510849)
 
 [man 命令 – 查看帮助信息](https://www.linuxcool.com/man)
+
+你知道 npm install -g 全局安装的命令行为什么可以直接使用呢？
+
+山月 3:38 PM Jul 26
+
+npm install -g pkg 时，通过 -g 会将 pkg 安装到全局目录下的 node_modules，在 linux 中假设为 /usr/local/lib/node_modules
+​
+如果该 pkg 拥有可执行文件，比如 webpack/vite/eslint 均有可执行文件。则在 package.json 中有一个字段是 bin。
+​
+node 将 bin 中字段指向的文件软链接至 $PATH 的某个目录，则该命令可以全局执行。

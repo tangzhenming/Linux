@@ -86,3 +86,5 @@ cat /etc/redhat-release 文件存在为 centos ，因为 centos 是从 red hat �
 [Linux /etc/profile 文件详解](https://www.cnblogs.com/lh03061238/p/9952659.html)
 
 [关于 Linux 服务器里 /usr/bin 目录和 /usr/local/bin 目录](https://blog.csdn.net/LittlePoem/article/details/109510849)
+
+[man 命令 – 查看帮助信息](https://www.linuxcool.com/man)

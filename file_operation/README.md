@@ -398,3 +398,68 @@ $ cat hello
 $ cat hello > /dev/null
 $ cat hello > /dev/null 2>&1
 ```
+
+## 8. glob/extglob
+
+### glob
+
+glob，global 的简写，使用通配符来匹配大量文件。比如 rm \*.js 就可以删除当前目录所有 js 文件。
+
+glob 拥有以下基本语法
+
+- \*：匹配 0 个及以上字符
+- ?：匹配 1 个字符
+- [...]：range，匹配方括号内所有字符
+- \*\*：匹配 0 个及多个子目录（在 bash 下，需要开启 globstar 选项，见下 shopt 命令）
+
+```bash
+# 列出当前目录下所有的 js 文件
+$ ls -lah *.js
+-rw-r--r--  1 tangzhenming  staff   4.5K Jul  7 17:04 787.ee4aa10d.chunk.js
+-rw-r--r--  1 tangzhenming  staff   141K Jul  7 17:04 main.f0b18748.js
+
+# 列出当前目录及所有子目录的 js 文件
+$ ls -lah **/*.js
+
+# 列出当前目录及所有子目录的后缀名为两个字母的文件
+$ ls -lah **/*.??
+
+# 列出当前目录中，以 2 或者 5 或者 8 开头的文件
+$ ls -lah [258]*
+```
+
+### extglob
+
+还有一些扩展的 glob 模式
+
+- ?(pattern-list)，重复 0 次或 1 次的模式
+- \*(pattern-list)，重复 0 次或多次
+- +(pattern-list)，重复 1 次或多次
+- @(pattern-list)，重复 1 次
+- !(pattern-list)，非匹配
+
+列出所有以 js/json/md 结尾的文件 `$ ls -lah *.*(js|json|md)`
+
+在 bash 中， extglob 需要通过 shopt 命令手动开启。
+
+```bash
+$ shopt | grep glob
+dotglob         off
+extglob         on
+failglob        off
+globasciiranges off
+globstar        off
+nocaseglob      off
+nullglob        off
+
+$ shopt -s extglob
+```
+
+在 zsh 中，extglob 需要通过 setopt 命令手动开启。
+
+```zsh
+$ setopt extendedglob
+$ setopt kshglob
+```
+
+判断当前终端是哪个 shell，可以使用 `$ echo $SHELL` / `echo $0`

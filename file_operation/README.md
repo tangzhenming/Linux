@@ -179,10 +179,16 @@ $ yum install tree
 
 查看文件系统信息。
 
-文件元属性：
+文件属性（文件元属性）：
 
-- regular file: 普通文件
+- File: 文件名
 - Size: 文件大小
+- FileType: regular file 普通文件
+- Mode: 文件权限
+- Uid: 所有者用户 ID
+- Gid: 所有者组 ID
+- Device: 设备号
+- Inode: inode 号
 - Links: 文件硬链接个数
 - Access Mode: 文件访问模式
 - Access: atime, 文件访问时间
@@ -222,7 +228,7 @@ Linux 中一切皆文件，展示其中一些（~/traefik/）：
 
 使用 ls -lah 第一个字符也表示文件类型：
 
-- -，regular file。普通文件。
+- -，regular file。普通文件（也可以使用 f 代表）。
 - d，directory。目录文件。
 - l，symbolic link。符号链接。
 - s，socket。套接字文件，一般以 .sock 作为后缀。（可把 .sock 理解为 API，我们可以像 HTTP 一样对它请求数据）
@@ -464,7 +470,7 @@ $ setopt kshglob
 
 判断当前终端是哪个 shell，可以使用 `$ echo $SHELL` / `echo $0`
 
-## brace 语法
+## 9. brace 语法
 
 brace，用以扩展集合、数组等，有以下语法。
 
@@ -508,4 +514,152 @@ $ touch {a..z}.js
 $ ls *.js
 a.js  c.js  e.js  g.js  i.js  k.js  m.js  o.js  q.js  s.js  u.js  w.js  y.js
 b.js  d.js  f.js  h.js  j.js  l.js  n.js  p.js  r.js  t.js  v.js  x.js  z.js
+```
+
+## 10. find/grep/ag/git grep
+
+find，在某个目录及所有子目录中的文件进行递归搜索，可根据文件的属性（通过 stat 获取文件属性）进行查找。
+
+### find
+
+```bash
+# 注意，如果文件路径名使用 glob，则需要使用引号括起来
+$ find . -name '*.json'
+
+# 在当前目录递归查找包含 hello 的文件
+$ find . -name '*hello*'
+
+# 在当前目录递归查找修改时间大于 30 天并且小于 60 天的文件
+# 其中数字以天为单位，+ 表示大于，- 表示小于
+# +30: 大于30天
+# -60: 小于60天
+$ find . -mtime +30 -mtime -60
+
+# 在当前目录递归查找权限 mode 为 777 的文件
+$ find . -perm 777
+
+# 在当前目录递归查找类型为 f/d/s 的文件
+$ find . -type f
+$ find . -type d
+$ find . -type s
+
+# 在当前目录递归查找 inode 为 10086 的文件
+# 一般用以寻找硬链接的个数，比如 pnpm 中某一个 package 的全局路径在哪里
+$ find . -inum 10086
+
+# 寻找相同的文件（硬链接），与以上命令相似
+$ find . -samefile package.json
+```
+
+找到所有文件，并对所查询的文件进行一系列操作：使用 --exec，而文件名可使用 {} 进行替代，最后需要使用 \; 结尾。
+
+```bash
+# 在当前目录递归查找所有以 test 开头的文件，并打印完整路径
+# realpath: 打印文件的完整路径
+# {}: 查找到文件名的占位符
+$ find . -name 'test*' -exec realpath {} \;
+```
+
+删除直接使用 -delete 命令。
+
+```bash
+# 在当前目录递归查找所有以 test 开头的文件，并删除
+$ find . -name 'test*' -delete
+```
+
+### grep
+
+grep 基于正则表达式，根据文件内容搜索（在目录中进行搜索使用 -r 参数。）
+
+```bash
+# 在当前目录寻找 helloworld
+$ grep -r helloworld .
+```
+
+### ag
+
+文件内容搜索
+
+A code searching tool similar to ack, with a focus on speed.
+
+https://github.com/ggreer/the_silver_searcher
+
+### git grep
+
+使用 git 管理的项目可以使用 git grep 进行内容搜索
+
+## 11. env
+
+### printenv
+
+获取系统的所有环境变量。
+
+环境变量命名一般为全部大写。
+
+获取某个环境变量的值：`printenv VAR_NAME`，如 `printenv HOME`
+
+除此之外，通过 $var 或者 ${var} 可以取得环境变量，并通过 echo 进行打印。
+
+```bash
+$ echo $HOME
+/Users/tangzhenming
+
+$ echo ${HOME}
+```
+
+扩展值：
+
+- ${var:-word}：如果 var 不存在，则使用默认值 word。
+- ${var:=word}：如果 var 不存在，则使用默认值 word。并且赋值 $var=word
+- ${var:+word}：如果 var 存在，则使用默认值 word。
+
+示例：
+
+```bash
+# 如果不配置环境变量，则其值为 production，并赋值给 NODE_ENV
+${NODE_ENV:=production}
+```
+
+### $HOME
+
+`$HOME`，当前用户目录，也就是 ~ 目录，两者是等价的。
+
+### $USER
+
+`$USER`，当前用户名。
+
+### $SHELL
+
+`$SHELL`，当前用户使用的 shell。
+
+### $PATH
+
+路径列表
+
+## 12. export/前置环境变量
+
+### export
+
+通过 export 可配置环境变量，如 export A=3，注意 = 前后不能有空格。
+
+通过 export 配置的环境变量仅在当前 shell(tty) 窗口有效，如果再开一个 shell，则无法读取变量。
+
+如果需要使得配置的环境变量永久有效，需要写入 ~/.bashrc 或者 ~/.zshrc
+
+写入后需要立即生成需要 source ~/.zshrc
+
+### 前置环境变量
+
+示例：
+
+```bash
+# 该环境变量仅在当前命令中有效
+$ NODE_ENV=production printenv NODE_ENV
+production
+
+# 没有输出
+$ printenv NODE_ENV
+
+# 实际工作中的使用示例
+$ NODE_ENV=production npm run build
 ```
